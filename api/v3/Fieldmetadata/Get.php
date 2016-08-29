@@ -28,6 +28,19 @@ function _civicrm_api3_fieldmetadata_get_spec(&$params) {
  * @throws API_Exception
  */
 function civicrm_api3_fieldmetadata_get($params) {
+  //Wrap our code in a try/catch so that we can translate the
+  //CRM_Core_Exception into an API_Exception because
+  //that play nicer with the core api wrapper
+  try {
+    $fetcher = CRM_Fieldmetadata_Fetcher::getInstanceForEntity($params['entity']);
+    $data = $fetcher->fetch($params['entity_params']);
 
-  return civicrm_api3_create_success(array(), $params, 'Fieldmetadata', 'Get');
+    $normalizer = CRM_Fieldmetadata_Normalizer::getInstanceForEntity($params['entity']);
+    $return = $normalizer->normalize($data, $params['entity_params']);
+
+    return civicrm_api3_create_success($return, $params, 'Fieldmetadata', 'Get');
+
+  } catch (Exception $e) {
+    throw new API_Exception($e->getMessage(), $e->getCode());
+  }
 }
