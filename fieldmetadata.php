@@ -107,10 +107,24 @@ function fieldmetadata_civicrm_caseTypes(&$caseTypes) {
  * Note: This hook only runs in CiviCRM 4.5+. It may
  * use features only available in v4.6+.
  *
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_caseTypes
+ * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_angularModules
  */
 function fieldmetadata_civicrm_angularModules(&$angularModules) {
-_fieldmetadata_civix_civicrm_angularModules($angularModules);
+  //Run the Civix included function for modules defined in php
+  _fieldmetadata_civix_civicrm_angularModules($angularModules);
+
+  $angularModules['fieldmetadata'] = array(
+    'ext' => 'org.civicrm.fieldmetadata',
+    'js' =>
+      array (
+        0 => 'ang/fieldmetadata.js',
+        1 => 'ang/fieldmetadata/*.js',
+        2 => 'ang/fieldmetadata/*/*.js'
+      ),
+    'css' => array (0 => 'ang/fieldmetadata.css'),
+    'partials' => array (0 => 'ang/fieldmetadata'),
+    'settings' => array ()
+  );
 }
 
 /**
