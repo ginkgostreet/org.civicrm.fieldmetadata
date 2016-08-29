@@ -7,8 +7,17 @@
  *
  */
 
-class CRM_Fieldmetadata_Normalizer {
+abstract class CRM_Fieldmetadata_Normalizer {
 
+
+  /**
+   * Entry point for Normalization
+   *
+   * @param $data - The data returned by the Fetcher class
+   * @param $params
+   * @return mixed
+   */
+  abstract function normalize($data, $params);
 
   /**
    * Instantiation function to get an instance of a Normalizer
