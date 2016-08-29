@@ -10,7 +10,11 @@
  */
 function _civicrm_api3_fieldmetadata_get_spec(&$params) {
   $params['entity']['api.required'] = 1;
-  $params['params']['api.required'] = 1;
+  $params['entity']['description'] = "The entity type for which field metadata is being fetched";
+  $params['entity']['type'] = CRM_Utils_Type::T_STRING;
+
+  $params['entity_params']['api.required'] = 1;
+  $params['entity_params']['description'] = "Parameters that will be passed to the Fetcher and Normalizer to give those classes enough information to return the metadata required. This will usually include the entity id or name, or sub-action etc";
 }
 
 
