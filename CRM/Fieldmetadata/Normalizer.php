@@ -8,7 +8,16 @@
  */
 
 class CRM_Fieldmetadata_Normalizer {
-  
+
+
+  /**
+   * Instantiation function to get an instance of a Normalizer
+   * sub-class for a given entity
+   *
+   * @param $entity - The Name of the entity for which we are trying to normalize metadata
+   * @return subclass of CRM_Fieldmetadata_Normalizer for given entity
+   * @throws CRM_Core_Exception
+   */
   public static function &getInstanceForEntity($entity) {
     // key: Entity => value: PHP class
     $normalizerClasses = array();

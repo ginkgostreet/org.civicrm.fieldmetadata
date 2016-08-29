@@ -13,8 +13,8 @@ class CRM_Fieldmetadata_Fetcher {
    * Instantiation function to get an instance of a Fetcher
    * sub-class for a given entity
    *
-   * @param $entity
-   * @return CRM_Case_Form_CustomData
+   * @param $entity - The Name of the entity for which we are trying to fetch metadata
+   * @return subclass of CRM_Fieldmetadata_Fetcher for given entity
    * @throws CRM_Core_Exception
    */
   public static function &getInstanceForEntity($entity) {
