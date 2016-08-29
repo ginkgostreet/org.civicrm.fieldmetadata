@@ -7,7 +7,16 @@
  *
  */
 
-class CRM_Fieldmetadata_Fetcher {
+abstract class CRM_Fieldmetadata_Fetcher {
+
+
+  /**
+   * Entry point for fetching field metadata information
+   *
+   * @param $params - entity_params passed into the api to identify the entity requested
+   * @return mixed
+   */
+  abstract function fetch(&$params);
 
   /**
    * Instantiation function to get an instance of a Fetcher
