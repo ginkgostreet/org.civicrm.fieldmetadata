@@ -8,4 +8,6 @@
  */
 class CRM_Fieldmetadata_Fetcher_UFGroup extends CRM_Fieldmetadata_Fetcher {
 
+  function fetch(&$params) {}
+
 }

@@ -8,4 +8,6 @@
  */
 class CRM_Fieldmetadata_Fetcher_PriceSet extends CRM_Fieldmetadata_Fetcher {
 
+  function fetch(&$params) {}
+
 }
