@@ -8,4 +8,8 @@
  */
 class CRM_Fieldmetadata_Normalizer_PriceSet extends CRM_Fieldmetadata_Normalizer {
 
+  function normalize($data, $params) {
+
+  }
+
 }
