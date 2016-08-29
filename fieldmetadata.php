@@ -150,3 +150,26 @@ function fieldmetadata_civicrm_preProcess($formName, &$form) {
 }
 
 */
+
+
+/**
+ * implementation of hook_civicrm_registerNormalizer
+ * used to register our two built in Normalizers
+ *
+ * @param $classes
+ */
+function fieldmetadata_civicrm_fieldmetadata_registerNormalizer(&$classes) {
+  $classes['UFGroup'] = "CRM_Fieldmetadata_Normalizer_UFGroup";
+  $classes['PriceSet'] = "CRM_Fieldmetadata_Normalizer_PriceSet";
+}
+
+/**
+ * implementation of hook_civicrm_registerFetcher
+ * used to register our two built in Fetchers
+ *
+ * @param $classes
+ */
+function fieldmetadata_civicrm_fieldmetadata_registerFetcher(&$classes) {
+  $classes['UFGroup'] = "CRM_Fieldmetadata_Fetcher_UFGroup";
+  $classes['PriceSet'] = "CRM_Fieldmetadata_Fetcher_PriceSet";
+}
