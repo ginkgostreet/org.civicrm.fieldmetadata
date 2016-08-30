@@ -15,7 +15,10 @@ class CRM_Fieldmetadata_Fetcher_PriceSet extends CRM_Fieldmetadata_Fetcher {
     $result = civicrm_api3("PriceSet", "get", array(
       'id' => $id,
       'api.PriceField.get' => array(
-        'api.PriceField.get' => array()
+        'options' => array('limit' => 0),
+        'api.PriceField.get' => array(
+          'options' => array('limit' => 0),
+        ),
       ),
     ));
 
