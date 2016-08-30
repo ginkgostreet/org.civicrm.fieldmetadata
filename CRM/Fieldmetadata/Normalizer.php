@@ -17,7 +17,129 @@ abstract class CRM_Fieldmetadata_Normalizer {
    * @param $params
    * @return mixed
    */
-  abstract function normalize($data, $params);
+  function normalize($data, $params) {
+    $metadata = $this->normalizeData($data, $params);
+    $this->orderFields($metadata['fields']);
+    return $metadata;
+  }
+
+  /**
+   * Sort the fields by the order key.
+   *
+   * @param $fields
+   */
+  function orderFields(&$fields) {
+    foreach($fields as $field) {
+      if (sizeof($field['options'] > 1)) {
+        uasort($field['options'], $this->compareOrder);
+      }
+    }
+    uasort($fields, $this->compareOrder);
+  }
+
+  /**
+   * Utility function for use inside uasort, called from orderFields()
+   *
+   * @param $a
+   * @param $b
+   * @return int
+   */
+  function compareOrder($a, $b) {
+    if ($a['order'] == $b['order']) {
+      return 0;
+    }
+    return ($a['order'] < $b['order']) ? -1 : 1;
+  }
+
+
+
+  /**
+   * Returns an array with all the keys needed
+   * for a field
+   *
+   * @return array
+   */
+  function getEmptyField() {
+    return array(
+      "entity" => null,
+      "label" => "",
+      "name" => "",
+      "order" => 0,
+      "required" => false,
+      "default" => "",
+      "options" => array(),
+      "price" => array(),
+      "displayPrice" => false,
+      "preText" => "",
+      "postText" => "",
+    );
+  }
+
+
+  /**
+   * Returns an array with all the needed keys for
+   * a field option.
+   *
+   * @return array
+   */
+  function getEmptyOption() {
+    return array(
+      "label" => "",
+      "name" => "",
+      "value" => "",
+      "order" => 0,
+      "required" => false,
+      "default" => false,
+      "price" => false,
+      "preText" => "",
+      "postText" => "",
+    );
+  }
+
+
+  /**
+   * Updates the Widget type based on context
+   *
+   * @param $fields
+   * @param $context
+   * @throws CRM_Core_Exception
+   */
+  function setWidgetTypesByContext(&$fields, $context) {
+    $getWidget = "get{$context}Widget";
+    if (method_exists($this, $getWidget)) {
+      foreach($fields as &$field) {
+        $field['widget'] = $this->$getWidget($field['widget']);
+        //todo: Run a hook so other extensions can update the widget type.
+      }
+    } else {
+      throw new CRM_Core_Exception("Cannot Set Context", 6);
+    }
+  }
+
+  /**
+   * Maps a field html_type to an angular widget
+   *
+   * @param $htmlType
+   * @return bool|string|CRM_Case_Form_CustomData
+   * @throws CRM_Core_Exception
+   */
+  function getAngularWidget($htmlType) {
+    switch($htmlType) {
+      case "Select":
+        return "crmRenderSelect";
+      default:
+        return "crmRender{$htmlType}";
+    }
+  }
+
+  /**
+   * Function Specific to normalizing for a given entity
+   *
+   * @param $data
+   * @param $params
+   * @return mixed
+   */
+  abstract protected function normalizeData(&$data, $params);
 
   /**
    * Instantiation function to get an instance of a Normalizer
