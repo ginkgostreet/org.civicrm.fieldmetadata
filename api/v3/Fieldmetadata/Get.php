@@ -32,11 +32,19 @@ function civicrm_api3_fieldmetadata_get($params) {
   //CRM_Core_Exception into an API_Exception because
   //that play nicer with the core api wrapper
   try {
+    //Create a Fetcher and call fetch
     $fetcher = CRM_Fieldmetadata_Fetcher::getInstanceForEntity($params['entity']);
     $data = $fetcher->fetch($params['entity_params']);
 
+    //Create a Normalizer Instance for this entity, and normalize the data
     $normalizer = CRM_Fieldmetadata_Normalizer::getInstanceForEntity($params['entity']);
     $return = $normalizer->normalize($data, $params['entity_params']);
+
+    //If a specific context is being requested, update the widget types
+    $context = CRM_Utils_Array::value("context", $params, false);
+    if($context) {
+      $normalizer->setWidgetTypesByContext($return['fields'], $context);
+    }
 
     return civicrm_api3_create_success($return, $params, 'Fieldmetadata', 'Get');
 
