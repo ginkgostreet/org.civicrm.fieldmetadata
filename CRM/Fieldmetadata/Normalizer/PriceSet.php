@@ -62,9 +62,11 @@ class CRM_Fieldmetadata_Normalizer_PriceSet extends CRM_Fieldmetadata_Normalizer
                   $option['name'] = "price_". $priceField['id'];
                 }
 
+                $field['options'][] = $option;
               }
             }
           }
+          $fields[$field['name']] = $field;
         }
       }
     }
