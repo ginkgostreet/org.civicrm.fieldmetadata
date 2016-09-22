@@ -70,6 +70,7 @@ abstract class CRM_Fieldmetadata_Normalizer {
       "options" => array(),
       "price" => array(),
       "displayPrice" => false,
+      "quantity" => false,
       "preText" => "",
       "postText" => "",
     );
@@ -112,6 +113,7 @@ abstract class CRM_Fieldmetadata_Normalizer {
         //todo: Run a hook so other extensions can update the widget type.
       }
     } else {
+      //todo: Create a hook that registers context
       throw new CRM_Core_Exception("Cannot Set Context", 6);
     }
   }
