@@ -1,0 +1,12 @@
+<div class="crm-section" crm-ui-id-scope="field.name">
+  <div class="label">
+    <label crm-ui-for="{{field.name}}" crm-depth="1">{{field.label}}</label>
+    <a crm-ui-help="help" ng-if="help"></a>
+  </div>
+  <div class="content">
+    <div class="description" ng-if="field.preText" ng-bind-html="preText"></div>
+    <crm-render-widget field="field" model="model" prefix="prefix"></crm-render-widget>
+    <div class="description" ng-if="field.postText" ng-bind-html="postText"></div>
+  </div>
+  <div class="clear"></div>
+</div>
