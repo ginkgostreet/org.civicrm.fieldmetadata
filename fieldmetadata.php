@@ -113,16 +113,16 @@ function fieldmetadata_civicrm_angularModules(&$angularModules) {
   //Run the Civix included function for modules defined in php
   _fieldmetadata_civix_civicrm_angularModules($angularModules);
 
-  $angularModules['fieldmetadata'] = array(
+  $angularModules['crmFieldMetadata'] = array(
     'ext' => 'org.civicrm.fieldmetadata',
     'js' =>
       array (
-        0 => 'ang/fieldmetadata.js',
-        1 => 'ang/fieldmetadata/*.js',
-        2 => 'ang/fieldmetadata/*/*.js'
+        0 => 'ang/crmFieldMetadata.js',
+        1 => 'ang/crmFieldMetadata/*.js',
+        2 => 'ang/crmFieldMetadata/*/*.js'
       ),
-    'css' => array (0 => 'ang/fieldmetadata.css'),
-    'partials' => array (0 => 'ang/fieldmetadata'),
+    'css' => array (0 => 'ang/crmFieldMetadata.css'),
+    'partials' => array (0 => 'ang/crmFieldMetadata'),
     'settings' => array ()
   );
 }
