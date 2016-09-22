@@ -59,8 +59,10 @@ class CRM_Fieldmetadata_Normalizer_PriceSet extends CRM_Fieldmetadata_Normalizer
 
                 if ($priceField['html_type'] == "CheckBox") {
                   $option['name'] = "price_". $priceField['id'] ."[". $priceOption['id'] ."]";
+                  $option['value'] = $priceOption['id'];
                 } else {
                   $option['name'] = "price_". $priceField['id'];
+                  $option['value'] = $priceOption['id'];
                 }
 
                 $field['options'][] = $option;
