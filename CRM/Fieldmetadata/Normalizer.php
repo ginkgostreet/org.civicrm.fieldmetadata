@@ -127,10 +127,12 @@ abstract class CRM_Fieldmetadata_Normalizer {
    */
   function getAngularWidget($htmlType) {
     switch($htmlType) {
-      case "Select":
-        return "crmRenderSelect";
+      //crm-ui-select
+      //crmUiDatepicker
+      //crmUiRichtext
+      //crmEntityref
       default:
-        return "crmRender{$htmlType}";
+        return "crm-render-". strtolower($htmlType);
     }
   }
 
