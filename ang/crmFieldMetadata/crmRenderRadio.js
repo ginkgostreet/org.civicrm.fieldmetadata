@@ -8,6 +8,11 @@
         prefix: '='
       },
       templateUrl: '~/crmFieldMetadata/crmRenderRadio.html',
+      controller: ['$scope', function crmRenderRadioController($scope) {
+        $scope.clear = function clear() {
+          $scope.model = null;
+        };
+      }]
     };
   });
 })(angular, CRM.$, CRM._);
