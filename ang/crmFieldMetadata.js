@@ -38,10 +38,10 @@
         var total = 0.00;
 
         $.each(newValue, function(name, value) {
-          if (metadata.values.fields[name].quantity && priceFields.hasOwnProperty(name)) {
+          if (metadata.values.fields[name] && metadata.values.fields[name].quantity && priceFields.hasOwnProperty(name)) {
             total = total + (parseInt(value) * priceFields[name]);
           } else {
-            if(typeof value === "object") {
+            if(value && typeof value === "object") {
               $.each(value, function(optionId, checked) {
                 if (checked && priceFields.hasOwnProperty(name + "_" + optionId)) {
                   total = total + priceFields[name + "_" + optionId];
