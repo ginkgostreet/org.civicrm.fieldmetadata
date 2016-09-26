@@ -128,9 +128,21 @@ abstract class CRM_Fieldmetadata_Normalizer {
   function getAngularWidget($htmlType) {
     switch($htmlType) {
       //crm-ui-select
-      //crmUiDatepicker
-      //crmUiRichtext
-      //crmEntityref
+      case 'Select State/Province':
+        //return "crm-render-state";
+        return "crm-render-select";
+      case 'Select Country':
+        //return "crm-render-country";
+        return "crm-render-select";
+      case 'RichTextEditor':
+        return "crm-ui-richtext";
+      case 'advcheckbox':
+        return "crm-render-checkbox";
+      case 'Date':
+      case 'DateTime':
+        return "crm-ui-datepicker";
+      case 'Autocomplete-Select':
+        return "crm-entityref";
       default:
         return "crm-render-". strtolower($htmlType);
     }
