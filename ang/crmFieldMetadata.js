@@ -7,7 +7,7 @@
       var deferred = $q.defer();
 
       crmApi('Fieldmetadata', 'get', {"entity": entity, "entity_params": entityParams, "context": "Angular"}).then(function(result) {
-        deferred.resolve(result);
+        deferred.resolve(result.values);
       }, function(status) {
         deferred.reject(status);
       });
