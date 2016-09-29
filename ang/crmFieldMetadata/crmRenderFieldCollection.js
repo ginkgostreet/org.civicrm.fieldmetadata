@@ -12,10 +12,10 @@
         $scope.legend = ($element[0].nodeName === "FIELDSET");
 
         //Add a class to the containing element.
-        $element.addClass("crmRenderFieldCollection-"+$scope.collection.values.name);
+        $element.addClass("crmRenderFieldCollection-"+$scope.collection.name);
 
-        $scope.preText = $sce.trustAsHtml($scope.collection.values.preText);
-        $scope.postText = $sce.trustAsHtml($scope.collection.values.postText);
+        $scope.preText = $sce.trustAsHtml($scope.collection.preText);
+        $scope.postText = $sce.trustAsHtml($scope.collection.postText);
       }],
       templateUrl: '~/crmFieldMetadata/crmRenderFieldCollection.html'
     };
