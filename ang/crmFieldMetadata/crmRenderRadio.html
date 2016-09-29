@@ -1,5 +1,5 @@
 <div ng-repeat="option in field.options">
-  <input type="radio" ng-model="$parent.model" name="{{field.name}}" id="{{prefix}}{{field.name}}_{{option.value}}" ng-value="option.value" ng-required="field.required" />
+  <input type="radio" ng-model="$parent.model" name="{{prefix}}{{field.name}}" id="{{prefix}}{{field.name}}_{{option.value}}" ng-value="option.value" ng-required="field.required" />
   <label for="{{prefix}}{{field.name}}_{{option.value}}">
     <span ng-if="option.preText" class="crm-help-pre description">{{option.preText}}:</span>
     {{option.label}}
