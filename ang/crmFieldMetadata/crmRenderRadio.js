@@ -12,6 +12,17 @@
         $scope.clear = function clear() {
           $scope.model = null;
         };
+
+        //Handle defaults
+        if(!$scope.model && $scope.field.options) {
+          for(var i in $scope.field.options) {
+            if ($scope.field.options[i].default) {
+              $scope.model = $scope.field.options[i].value;
+              break;
+            }
+          }
+        }
+
       }]
     };
   });
