@@ -18,8 +18,8 @@
   });
 
 
-  angular.module('crmFieldMetadata').factory('crmFieldMetadataTotal', function(){
-    var crmFieldMetadataTotal = function($scope, metadata, data, result) {
+  angular.module('crmFieldMetadata').factory('crmFieldMetadataTotal', function($parse){
+    var crmFieldMetadataTotal = function(resultScope, metadata, data, result) {
       var priceFields = {};
 
       $.each(metadata.fields, function(name, field) {
@@ -34,7 +34,7 @@
         }
       });
 
-      $scope.$watch(data, function (newValue, oldValue, scope) {
+      resultScope.$watch(data, function (newValue, oldValue, scope) {
         var total = 0.00;
 
         $.each(newValue, function(name, value) {
@@ -53,7 +53,9 @@
           }
         });
 
-        $scope[result] = total;
+        var resultObject = $parse(result);
+        resultObject.assign(resultScope, total);
+        //resultScope[result] = total;
       }, true);
     };
     return crmFieldMetadataTotal;
