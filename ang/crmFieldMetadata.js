@@ -22,7 +22,7 @@
     var crmFieldMetadataTotal = function($scope, metadata, data, result) {
       var priceFields = {};
 
-      $.each(metadata.values.fields, function(name, field) {
+      $.each(metadata.fields, function(name, field) {
         if (field.quantity == 1 && field.price) {
           priceFields[name] = parseFloat(field.price);
         } else if (field.options) {
@@ -38,7 +38,7 @@
         var total = 0.00;
 
         $.each(newValue, function(name, value) {
-          if (metadata.values.fields[name] && metadata.values.fields[name].quantity && priceFields.hasOwnProperty(name)) {
+          if (metadata.fields[name] && metadata.fields[name].quantity && priceFields.hasOwnProperty(name)) {
             total = total + (parseInt(value) * priceFields[name]);
           } else {
             if(value && typeof value === "object") {
