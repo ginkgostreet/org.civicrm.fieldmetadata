@@ -18,7 +18,6 @@ class CRM_Fieldmetadata_Normalizer_PaymentBlock extends CRM_Fieldmetadata_Normal
     );
 
     $fields = array();
-    $fieldOrder = 2;
     foreach($data['fields'] as $pField) {
       $field = $this->getEmptyField();
 
@@ -26,11 +25,9 @@ class CRM_Fieldmetadata_Normalizer_PaymentBlock extends CRM_Fieldmetadata_Normal
       $field["entity"] = "Transaction";
 
       $field['name'] = $pField['name'];
-      $field['order'] = $fieldOrder;
+      $field['order'] = $this->getFieldOrder($pField['name']);
       $field['required'] = $pField['is_required'];
       $field['label'] = $pField['title'];
-      $field['label'] = $pField['title'];
-      $field['widget'] = $pField['htmlType'];
       $field['rules'] = $pField['rules'];
 
       if($field['name'] == "credit_card_exp_date") {
@@ -40,7 +37,6 @@ class CRM_Fieldmetadata_Normalizer_PaymentBlock extends CRM_Fieldmetadata_Normal
       }
 
       if($field['name'] == "credit_card_type") {
-        $field['order'] = 1;
         $optionOrder = 1;
         foreach($pField['attributes'] as $id => $label) {
           $option = $this->getEmptyOption();
@@ -57,12 +53,21 @@ class CRM_Fieldmetadata_Normalizer_PaymentBlock extends CRM_Fieldmetadata_Normal
 
 
       $fields[$field['name']] = $field;
-      $fieldOrder++;
     }
 
     $return['fields'] = $fields;
 
     return $return;
+  }
+
+  function getFieldOrder($name) {
+    switch($name) {
+      case "credit_card_type": return 0;
+      case "credit_card_number": return 1;
+      case "credit_card_exp_date": return 2;
+      case "cvv2": return 3;
+      default: return 6;
+    }
   }
 
 }
