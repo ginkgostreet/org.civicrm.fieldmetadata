@@ -8,6 +8,9 @@
         prefix: '=',
       },
       templateUrl: '~/crmFieldMetadata/crmRenderCheckbox.html',
+      controller: ['$scope', function crmRenderCheckboxController($scope) {
+        $scope.formatMoney = CRM.formatMoney;
+      }]
     };
   });
 })(angular, CRM.$, CRM._);

@@ -11,9 +11,9 @@
       controller: ['$scope', function crmRenderSelectController($scope) {
         $scope.printPrice = function(option) {
           if (option.price) {
-            return " - $ " + option.price;
+            return " - " + CRM.formatMoney(option.price);
           }
-        }
+        };
       }]
     };
   });

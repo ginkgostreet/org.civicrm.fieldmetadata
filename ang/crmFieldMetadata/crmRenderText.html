@@ -1,1 +1,1 @@
-<input name="{{field.name}}" ng-attr-size="{{field.attributes.size}}" ng-model="model" ng-required="field.required" /><span class="price-field-amount" ng-if="field.displayPrice"> $ {{field.price}}</span>
+<input name="{{field.name}}" ng-attr-size="{{field.attributes.size}}" ng-model="model" ng-required="field.required" /> <span class="price-field-amount" ng-if="field.displayPrice">{{formatMoney(field.price)}}</span>
