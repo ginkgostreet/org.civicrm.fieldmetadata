@@ -1,0 +1,8 @@
+<select ng-model="model.M">
+  <option value="">-{{ts("month")}}-</option>
+  <option ng-repeat="month in months" ng-value="month">{{month}}</option>
+</select>
+<select ng-model="model.Y">
+  <option value="">-{{ts("year")}}-</option>
+  <option ng-repeat="year in years" ng-value="year">{{year}}</option>
+</select>
