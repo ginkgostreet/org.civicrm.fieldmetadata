@@ -14,6 +14,12 @@
         //Add a class to the containing element.
         $element.addClass("crmRenderFieldCollection-"+$scope.collection.name);
 
+        var fieldList = [];
+        _.each($scope.collection.fields, function(field, fieldKey) {
+           fieldList.push({key: fieldKey, order: field.order});
+        });
+        $scope.fieldList = fieldList;
+
         $scope.preText = $sce.trustAsHtml($scope.collection.preText);
         $scope.postText = $sce.trustAsHtml($scope.collection.postText);
       }],
