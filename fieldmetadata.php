@@ -162,6 +162,7 @@ function fieldmetadata_civicrm_fieldmetadata_registerNormalizer(&$classes) {
   $classes['UFGroup'] = "CRM_Fieldmetadata_Normalizer_UFGroup";
   $classes['PriceSet'] = "CRM_Fieldmetadata_Normalizer_PriceSet";
   $classes['PaymentBlock'] = "CRM_Fieldmetadata_Normalizer_PaymentBlock";
+  $classes['BillingBlock'] = "CRM_Fieldmetadata_Normalizer_BillingBlock";
 }
 
 /**
@@ -174,4 +175,5 @@ function fieldmetadata_civicrm_fieldmetadata_registerFetcher(&$classes) {
   $classes['UFGroup'] = "CRM_Fieldmetadata_Fetcher_UFGroup";
   $classes['PriceSet'] = "CRM_Fieldmetadata_Fetcher_PriceSet";
   $classes['PaymentBlock'] = "CRM_Fieldmetadata_Fetcher_PaymentBlock";
+  $classes['BillingBlock'] = "CRM_Fieldmetadata_Fetcher_BillingBlock";
 }
