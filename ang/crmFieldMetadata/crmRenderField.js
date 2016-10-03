@@ -5,12 +5,12 @@
       scope: {
         field: '=crmRenderField',
         model: '=',
+        parentModel: '=',
         prefix: '='
       },
       templateUrl: '~/crmFieldMetadata/crmRenderField.html',
       controller: ['$scope', '$element', '$sce', function crmRenderFieldController($scope, $element, $sce) {
         $element.addClass('crm-section');
-
         $scope.preText = $sce.trustAsHtml($scope.field.preText);
         $scope.postText = $sce.trustAsHtml($scope.field.postText);
 

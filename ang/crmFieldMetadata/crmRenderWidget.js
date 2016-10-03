@@ -6,6 +6,7 @@
       scope: {
         field: '=',
         model: '=',
+        parentModel: '=',
         prefix: '='
       },
       link: function(scope, elem, attrs) {
@@ -25,7 +26,7 @@
             if (scope.field.widget.indexOf('crm-render') === -1) {
               childEl = $compile('<input ' + scope.field.widget + ' field="field" ng-model="model" prefix="prefix" ng-required="field.required" />')(scope);
             } else {
-              childEl = $compile('<div ' + scope.field.widget + ' field="field" model="model" prefix="prefix" ng-required="field.required"></div>')(scope);
+              childEl = $compile('<div ' + scope.field.widget + ' field="field" parent-model="parentModel" model="model" prefix="prefix" ng-required="field.required"></div>')(scope);
             }
         }
 

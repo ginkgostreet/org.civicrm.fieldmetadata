@@ -7,7 +7,7 @@
   </div>
   <div class="content">
     <div class="description" ng-if="field.preText" ng-bind-html="preText"></div>
-    <crm-render-widget field="field" model="model" prefix="prefix"></crm-render-widget>
+    <crm-render-widget field="field" parent-model="parentModel" model="model" prefix="prefix"></crm-render-widget>
     <div class="description" ng-if="field.postText" ng-bind-html="postText"></div>
   </div>
   <div class="clear"></div>
