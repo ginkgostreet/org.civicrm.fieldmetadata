@@ -14,7 +14,7 @@
         var d = new Date();
         var year = d.getFullYear();
 
-        $scope.months = _.range(1,12);
+        $scope.months = _.range(1,13);
         $scope.years = _.range(year, year + 10);
 
         //$scope.$watch('field', function(field) {});
