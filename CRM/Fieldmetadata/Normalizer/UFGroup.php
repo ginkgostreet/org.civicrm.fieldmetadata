@@ -31,12 +31,18 @@ class CRM_Fieldmetadata_Normalizer_UFGroup extends CRM_Fieldmetadata_Normalizer 
       $field["name"] = $fieldData['name'];
       $field["order"] = $fieldOrder;
       $field["required"] = $fieldData['is_required'];
+      $field["attributes"] = $fieldData['attributes'];
       $field["defaultValue"] = "";
       $field["preText"] = CRM_Utils_Array::value("help_pre", $fieldData, "");
       $field["postText"] = CRM_Utils_Array::value("help_post", $fieldData, "");
 
       //todo: Use either the html_type or the data type
       $field['widget'] = $fieldData['html_type'];
+
+      if($field['widget'] == "ChainSelect" && strpos($field['name'], "state_province") !== false) {
+        $field['attributes']['watcher'] = str_replace("state_province", "country", $field['name']);
+        $field['attributes']['data-callback'] = CRM_Utils_System::url("civicrm/ajax/jqState");
+      }
 
       if(array_key_exists("options", $fieldData)) {
         $index = 1;

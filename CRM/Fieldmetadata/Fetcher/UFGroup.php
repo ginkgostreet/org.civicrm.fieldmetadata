@@ -56,8 +56,11 @@ class CRM_Fieldmetadata_Fetcher_UFGroup extends CRM_Fieldmetadata_Fetcher {
         } catch (Exception $e) {}
 
         //Populate Country Select
-        if ($field['data_type'] == "Country" && !array_key_exists("options", $field)) {
-          $field['options'] = CRM_Core_PseudoConstant::country();
+        if ($field['data_type'] == "Country" ) {
+          if (!array_key_exists("options", $field) || empty($field['options'])) {
+
+            $field['options'] = CRM_Core_PseudoConstant::country();
+          }
         }
 
         //Populate State Select
@@ -101,8 +104,14 @@ class CRM_Fieldmetadata_Fetcher_UFGroup extends CRM_Fieldmetadata_Fetcher {
 
   public function add($type, $name, $label = '', $attributes = '', $required = FALSE, $extra = NULL) {
     if (array_key_exists($name, $this->fields)) {
+      //Set the HTML type for those fields that don't have it.
       if (!array_key_exists('html_type', $this->fields[$name])) {
         $this->fields[$name]['html_type'] = $type;
+      }
+
+      //Set options for those select fields that don't have them.
+      if($type == "select" && !array_key_exists('options', $this->fields[$name]) && is_array($attributes)) {
+        $this->fields[$name]['options'] = $attributes;
       }
     }
   }
