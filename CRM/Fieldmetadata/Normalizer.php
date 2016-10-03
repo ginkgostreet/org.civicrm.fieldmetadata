@@ -138,6 +138,8 @@ abstract class CRM_Fieldmetadata_Normalizer {
         return "crm-ui-richtext";
       case 'advcheckbox':
         return "crm-render-checkbox";
+      case 'ChainSelect':
+        return "crm-render-chain-select";
       case 'Date':
       case 'DateTime':
         return "crm-ui-datepicker";
