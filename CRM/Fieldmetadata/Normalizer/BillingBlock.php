@@ -44,10 +44,19 @@ class CRM_Fieldmetadata_Normalizer_BillingBlock extends CRM_Fieldmetadata_Normal
         }
       }
 
+      if($field['name'] == "billing_country_id-5") {
+        $field['attributes'] = array();
+        $field['attributes']['data-target'] = "billing_state_province_id-5";
+      }
+      if($field['name'] == "billing_state_province_id-5") {
+        $field['widget'] = "ChainSelect";
+        $field['attributes'] = array();
+        $field['attributes']['watcher'] = "billing_country_id-5";
+        $field['attributes']['data-callback'] = CRM_Utils_System::url("civicrm/ajax/jqState");
+      }
+
       $fields[$field['name']] = $field;
     }
-
-
 
     $return['fields'] = $fields;
     return $return;
