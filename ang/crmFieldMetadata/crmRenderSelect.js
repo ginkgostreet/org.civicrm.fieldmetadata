@@ -14,6 +14,11 @@
             return " - " + CRM.formatMoney(option.price);
           }
         };
+
+        $scope.classes = "";
+        if($scope.field.attributes && $scope.field.attributes.class) {
+          $scope.classes = $scope.field.attributes.class;
+        }
       }]
     };
   });
