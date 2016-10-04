@@ -1,0 +1,10 @@
+<div ng-repeat="option in field.options">
+  <input type="radio" ng-model="$parent.model" name="{{prefix}}{{field.name}}" id="{{prefix}}{{field.name}}_{{option.value}}" ng-value="option.value" ng-required="field.required" />
+  <label for="{{prefix}}{{field.name}}_{{option.value}}">
+    <span ng-if="option.preText" class="crm-help-pre description">{{option.preText}}:</span>
+    {{option.label}}
+    <span ng-if="option.price" class="crm-price-amount-amount"> - $ {{option.price}}</span>
+    <span ng-if="option.postText" class="crm-help-post description">:{{option.postText}}</span>
+  </label>
+</div>
+<a ng-if="model && !field.required" ng-click="clear()" class="crm-hover-button crm-clear-link" title="{{ts('Clear')}}"><i class="crm-i fa-times"></i></a>

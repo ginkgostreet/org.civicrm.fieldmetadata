@@ -1,0 +1,11 @@
+<input ng-if="!field.options.length" type="checkbox" ng-model="$parent.model"  name="{{field.name}}" id="{{prefix}}{{field.name}}" ng-required="field.required" />
+
+<div ng-if="field.options.length" ng-repeat="option in field.options">
+  <input type="checkbox" ng-model="$parent.model[option.value]" id="{{prefix}}{{field.name}}_{{option.value}}" name="{{option.name}}" ng-required="option.required" />
+  <label for="{{prefix}}{{field.name}}_{{option.value}}">
+    <span ng-if="option.preText" class="crm-help-pre description">{{option.preText}}:</span>
+    {{option.label}}
+    <span ng-if="option.price" class="crm-price-amount-amount"> - {{formatMoney(option.price)}}</span>
+    <span ng-if="option.postText" class="crm-help-post description">:{{option.postText}}</span>
+  </label>
+</div>

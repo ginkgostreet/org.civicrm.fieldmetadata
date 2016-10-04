@@ -1,0 +1,6 @@
+<legend ng-if="legend && collection.title">{{collection.title}}</legend>
+<h3 ng-if="!legend && collection.title">{{collection.title}}</h3>
+
+<div class="crmFieldMetadataPreText" ng-if="preText" ng-bind-html="preText"></div>
+<div crm-render-field="collection.fields[field.key]" ng-repeat="field in fieldList | orderBy: 'order'" parent-model="model" model="model[collection.fields[field.key].name]" prefix="prefix"></div>
+<div class="crmFieldMetadataPostText" ng-if="postText" ng-bind-html="postText"></div>

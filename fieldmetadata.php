@@ -107,10 +107,24 @@ function fieldmetadata_civicrm_caseTypes(&$caseTypes) {
  * Note: This hook only runs in CiviCRM 4.5+. It may
  * use features only available in v4.6+.
  *
- * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_caseTypes
+ * @link http://wiki.civicrm.org/confluence/display/CRMDOC/hook_civicrm_angularModules
  */
 function fieldmetadata_civicrm_angularModules(&$angularModules) {
-_fieldmetadata_civix_civicrm_angularModules($angularModules);
+  //Run the Civix included function for modules defined in php
+  _fieldmetadata_civix_civicrm_angularModules($angularModules);
+
+  $angularModules['crmFieldMetadata'] = array(
+    'ext' => 'org.civicrm.fieldmetadata',
+    'js' =>
+      array (
+        0 => 'ang/crmFieldMetadata.js',
+        1 => 'ang/crmFieldMetadata/*.js',
+        2 => 'ang/crmFieldMetadata/*/*.js'
+      ),
+    'css' => array (0 => 'ang/crmFieldMetadata.css'),
+    'partials' => array (0 => 'ang/crmFieldMetadata'),
+    'settings' => array ()
+  );
 }
 
 /**
@@ -136,3 +150,30 @@ function fieldmetadata_civicrm_preProcess($formName, &$form) {
 }
 
 */
+
+
+/**
+ * implementation of hook_civicrm_registerNormalizer
+ * used to register our two built in Normalizers
+ *
+ * @param $classes
+ */
+function fieldmetadata_civicrm_fieldmetadata_registerNormalizer(&$classes) {
+  $classes['UFGroup'] = "CRM_Fieldmetadata_Normalizer_UFGroup";
+  $classes['PriceSet'] = "CRM_Fieldmetadata_Normalizer_PriceSet";
+  $classes['PaymentBlock'] = "CRM_Fieldmetadata_Normalizer_PaymentBlock";
+  $classes['BillingBlock'] = "CRM_Fieldmetadata_Normalizer_BillingBlock";
+}
+
+/**
+ * implementation of hook_civicrm_registerFetcher
+ * used to register our two built in Fetchers
+ *
+ * @param $classes
+ */
+function fieldmetadata_civicrm_fieldmetadata_registerFetcher(&$classes) {
+  $classes['UFGroup'] = "CRM_Fieldmetadata_Fetcher_UFGroup";
+  $classes['PriceSet'] = "CRM_Fieldmetadata_Fetcher_PriceSet";
+  $classes['PaymentBlock'] = "CRM_Fieldmetadata_Fetcher_PaymentBlock";
+  $classes['BillingBlock'] = "CRM_Fieldmetadata_Fetcher_BillingBlock";
+}
