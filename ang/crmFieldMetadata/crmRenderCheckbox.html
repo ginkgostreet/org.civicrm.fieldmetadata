@@ -1,7 +1,20 @@
 <input ng-if="!field.options.length" type="checkbox" ng-model="$parent.model"  name="{{field.name}}" id="{{prefix}}{{field.name}}" ng-required="field.required" />
 
+<!-- Because we are using multiple HTML elements (the checkboxes) to represent
+     a single model (the array of selections for this field as returned by
+     CiviCRM's API), the checkbox inputs below are bound to their model
+     manually using ng-click, ng-checked, and ng-required. For ng-required to be
+     useful, the checkbox elements must have an ng-model set, as the field is
+     only flagged as invalid if the "required" attribute is set AND calling
+     NgModelController.$isEmpty returns true. If ng-model is not set, the
+     field is always considered valid. However, setting ng-model would interfere
+     with our manual model management because Angular's automatic binding would
+     kick in. Setting the model option updateOn to an empty string effectively
+     turns off Angular's binding magic.
+-->
 <div ng-if="field.options.length" ng-repeat="option in field.options">
   <input type="checkbox" id="{{prefix}}{{field.name}}_{{option.value}}" name="{{option.name}}"
+         ng-model="model" ng-model-options="{updateOn: ''}"
          ng-click="handleToggle(option.value)" ng-checked="isChecked(option.value)" ng-required="isRequired()" />
   <label for="{{prefix}}{{field.name}}_{{option.value}}">
     <span ng-if="option.preText" class="crm-help-pre description">{{option.preText}}:</span>
