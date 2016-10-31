@@ -1,17 +1,21 @@
 <!-- TODO: Is this necessary? Under what circumstances would there be no options? -->
 <input ng-if="!field.options.length" type="checkbox" ng-model="$parent.model"  name="{{field.name}}" id="{{prefix}}{{field.name}}" ng-required="field.required" />
 
-<!-- Because we are using multiple HTML elements (the checkboxes) to represent
-     a single model (the array of selections for this field as returned by
-     CiviCRM's API), the checkbox inputs below are bound to their model
-     manually using ng-click, ng-checked, and ng-required. For ng-required to be
-     useful, the checkbox elements must have an ng-model set, as the field is
-     only flagged as invalid if the "required" attribute is set AND calling
-     NgModelController.$isEmpty returns true. If ng-model is not set, the
-     field is always considered valid. However, setting ng-model would interfere
-     with our manual model management because Angular's automatic binding would
-     kick in. Setting the model option updateOn to an empty string effectively
-     turns off Angular's binding magic.
+<!-- Typically in an Angular application, models and the state of related
+     interface elements are automagically synced. When there is a one-to-one
+     relationship between models and UI elements, this is convenient. Because we
+     are using multiple HTML elements (the checkboxes) to represent individual
+     items in a single model (the array of selections for this field as returned
+     by CiviCRM's API), we need to do some extra work. We disable model updates
+     for these elements and manage the sync using ng-click, ng-checked, and
+     ng-required. Per the Angular doc, model updates can be limited to certain
+     events (click, blur, etc.) using the updateOn property of the object passed
+     to the ng-model-options directive; setting this to an empty string (not
+     documented) disables them altogether. Note: for a checkbox the field
+     validity is determined by both whether the "required" attribute is set (by
+     ng-required in our case) and by the value of NgModelController.$isEmpty
+     (which evaluates ng-model), so it is important that checkbox element's
+     ng-model reflect the whole group of checkboxes.
 -->
 <div ng-if="field.options.length" ng-repeat="option in field.options">
   <input type="checkbox" id="{{prefix}}{{field.name}}_{{option.value}}" name="{{option.name}}"
