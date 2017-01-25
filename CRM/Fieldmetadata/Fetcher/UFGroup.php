@@ -16,7 +16,10 @@ class CRM_Fieldmetadata_Fetcher_UFGroup extends CRM_Fieldmetadata_Fetcher {
     $result = civicrm_api3("UFGroup", "get", array(
       'sequential' => 1,
       'id' => $id,
-      'api.UFField.get' => array('options' => array('limit' => 0))
+      'api.UFField.get' => array('options' => array(
+        'limit' => 0,
+        'sort' => 'weight',
+      )),
     ));
 
     $this->group = $result['values'][0];
