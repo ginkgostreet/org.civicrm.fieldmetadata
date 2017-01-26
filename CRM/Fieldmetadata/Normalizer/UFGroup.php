@@ -19,7 +19,6 @@ class CRM_Fieldmetadata_Normalizer_UFGroup extends CRM_Fieldmetadata_Normalizer 
     );
 
     $fields = array();
-    //$fields = $data['fields'];
 
     $fieldOrder = 1;
     foreach($data['fields'] as $fieldData) {
