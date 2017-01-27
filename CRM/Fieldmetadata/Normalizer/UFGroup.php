@@ -29,7 +29,7 @@ class CRM_Fieldmetadata_Normalizer_UFGroup extends CRM_Fieldmetadata_Normalizer 
       $field["label"] = $fieldData['title'];
       $field["name"] = $fieldData['name'];
       $field["order"] = $fieldOrder;
-      $field["required"] = $fieldData['is_required'];
+      $field["required"] = $this->stringifyBooleanValue($fieldData['is_required']);
       $field["attributes"] = $fieldData['attributes'];
       $field["defaultValue"] = "";
       $field["preText"] = CRM_Utils_Array::value("help_pre", $fieldData, "");

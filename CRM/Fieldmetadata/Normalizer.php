@@ -97,6 +97,22 @@ abstract class CRM_Fieldmetadata_Normalizer {
     );
   }
 
+  /**
+   * Where CiviCRM gives "", NULL, FALSE, "0", 0, etc. to represent FALSE, this
+   * method saves the day by converting the value to a string.
+   *
+   * When output from normalizers is predictable and consistent, clients have
+   * less type juggling to do.
+   *
+   * This method might be out of place here. It may be more appropriate to have
+   * a Field class than to address this level of detail here.
+   *
+   * @param mixed $value
+   * @return string "1" or "0"
+   */
+  function stringifyBooleanValue($value) {
+    return $value ? "1" : "0";
+  }
 
   /**
    * Updates the Widget type based on context
