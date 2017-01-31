@@ -110,7 +110,7 @@ abstract class CRM_Fieldmetadata_Normalizer {
    * @param mixed $value
    * @return string "1" or "0"
    */
-  function stringifyBooleanValue($value) {
+  function normalizeBoolean($value) {
     return $value ? "1" : "0";
   }
 
