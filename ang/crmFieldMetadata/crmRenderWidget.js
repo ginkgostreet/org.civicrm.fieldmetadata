@@ -10,8 +10,7 @@
         prefix: '='
       },
       link: function(scope, elem, attrs) {
-        //console.log(scope.field.widget);
-        scope.field.displayPrice = (scope.field.displayPrice == 1);
+        scope.field.displayPrice = (scope.field.displayPrice === '1');
         var childEl;
         switch (scope.field.widget) {
           case "crm-ui-datepicker":

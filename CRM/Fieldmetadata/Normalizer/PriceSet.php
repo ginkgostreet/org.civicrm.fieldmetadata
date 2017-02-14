@@ -36,7 +36,7 @@ class CRM_Fieldmetadata_Normalizer_PriceSet extends CRM_Fieldmetadata_Normalizer
           $field["defaultValue"] = "";
           $field["preText"] = CRM_Utils_Array::value("help_pre", $priceField, "");
           $field["postText"] = CRM_Utils_Array::value("help_post", $priceField, "");
-          $field["displayPrice"] = $priceField['is_display_amounts'];
+          $field["displayPrice"] = $this->normalizeBoolean($priceField['is_display_amounts']);
           $field["quantity"] = ($priceField['is_enter_qty'] == 1);
 
 

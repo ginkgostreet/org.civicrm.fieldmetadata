@@ -24,7 +24,7 @@
   <label for="{{prefix}}{{field.name}}_{{option.value}}">
     <span ng-if="option.preText" class="crm-help-pre description">{{option.preText}}:</span>
     {{option.label}}
-    <span ng-if="option.price" class="crm-price-amount-amount"> - {{formatMoney(option.price)}}</span>
+    <span ng-if="option.price && field.displayPrice" class="crm-price-amount-amount"> - {{formatMoney(option.price)}}</span>
     <span ng-if="option.postText" class="crm-help-post description">:{{option.postText}}</span>
   </label>
 </div>
