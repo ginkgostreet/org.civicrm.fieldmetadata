@@ -89,24 +89,16 @@ class CRM_Fieldmetadata_Normalizer_PriceSet extends CRM_Fieldmetadata_Normalizer
    * @return boolean
    */
   protected function priceFieldIsActive(array $field) {
-    if (!CRM_Utils_Array::value('is_active', $field)) {
-      return FALSE;
-    }
+    $isActive = CRM_Utils_Array::value('is_active', $field);
 
     $now = time();
     $expireTime = strtotime(CRM_Utils_Array::value('expire_on', $field));
-    // Consider the pricefield active if the time string is not parseable
-    if ($expireTime !== FALSE && $expireTime < $now) {
-      return FALSE;
-    }
+    $isExpired = $expireTime !== FALSE && $expireTime < $now;
 
-    $activeTime = strtotime(CRM_Utils_Array::value('active_on', $field));
-    // Consider the pricefield active if the time string is not parseable
-    if ($activeTime !== FALSE && $activeTime > $now) {
-      return FALSE;
-    }
+    $startTime = strtotime(CRM_Utils_Array::value('active_on', $field));
+    $hasStarted = $startTime === FALSE || $startTime < $now;
 
-    return TRUE;
+    return $isActive && $hasStarted && !$isExpired;
   }
 
 }
