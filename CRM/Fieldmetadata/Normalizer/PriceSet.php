@@ -24,7 +24,7 @@ class CRM_Fieldmetadata_Normalizer_PriceSet extends CRM_Fieldmetadata_Normalizer
       $priceFields = CRM_Utils_Array::value("values", $data['api.PriceField.get'], array());
       foreach($priceFields as $priceField) {
 
-        if($priceField['is_active'] == 1) {
+        if ($this->priceFieldIsActive($priceField)) {
 
           $field = $this->getEmptyField();
           $field["collectionType"] = "PriceSet";
@@ -77,4 +77,28 @@ class CRM_Fieldmetadata_Normalizer_PriceSet extends CRM_Fieldmetadata_Normalizer
     $return['fields'] = $fields;
     return $return;
   }
+
+  /**
+   * Determines whether or not a pricefield is active.
+   *
+   * This method considers criteria in addition to the is_active flag to
+   * determine whether or not the field is active.
+   *
+   * @param array $field
+   *   Formatted like the values array from api.PriceField.get.
+   * @return boolean
+   */
+  protected function priceFieldIsActive(array $field) {
+    $isActive = CRM_Utils_Array::value('is_active', $field);
+
+    $now = time();
+    $expireTime = strtotime(CRM_Utils_Array::value('expire_on', $field));
+    $isExpired = $expireTime !== FALSE && $expireTime < $now;
+
+    $startTime = strtotime(CRM_Utils_Array::value('active_on', $field));
+    $hasStarted = $startTime === FALSE || $startTime < $now;
+
+    return $isActive && $hasStarted && !$isExpired;
+  }
+
 }
