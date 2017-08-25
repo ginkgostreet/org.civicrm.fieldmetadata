@@ -214,7 +214,7 @@ abstract class CRM_Fieldmetadata_Normalizer {
    *   Looks like the result of api.CustomField.getsingle.
    * @return array
    */
-  private function mockBooleanOptions(array $customField) {
+  protected function mockBooleanOptions(array $customField) {
     $result = array();
     $fieldOptions = array(
       array(
