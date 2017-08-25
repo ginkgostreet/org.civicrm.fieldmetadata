@@ -83,6 +83,10 @@ class CRM_Fieldmetadata_Normalizer_UFGroup extends CRM_Fieldmetadata_Normalizer 
         }
       }
 
+      if ($fieldData['data_type'] === 'Boolean') {
+        $field['options'] = $this->mockBooleanOptions($fieldData);
+      }
+
       $fields[] = $field;
       $fieldOrder++;
     }

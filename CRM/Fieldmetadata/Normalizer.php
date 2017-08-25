@@ -205,4 +205,44 @@ abstract class CRM_Fieldmetadata_Normalizer {
 
     return $normalizer;
   }
+
+  /**
+   * Boolean fields in CiviCRM do not use an option group, so we have to
+   * simulate the options.
+   *
+   * @param array $customField
+   *   Looks like the result of api.CustomField.getsingle.
+   * @return array
+   */
+  protected function mockBooleanOptions(array $customField) {
+    $result = array();
+    $fieldOptions = array(
+      array(
+        'label' => 'Yes',
+        'weight' => 0,
+        'value' => "1",
+      ),
+      array(
+        'label' => 'No',
+        'weight' => 1,
+        'value' => "0",
+      ),
+    );
+    foreach ($fieldOptions as $fieldOption) {
+      $option = $this->getEmptyOption();
+      $option['is_active'] = $this->normalizeBoolean(1);
+      $option['label'] = $fieldOption['label'];
+      $option['order'] = $fieldOption['weight'];
+      $option['value'] = $fieldOption['value'];
+
+      $isDefault = $customField['default_value'] === $option['value'];
+      $option['default'] = $this->normalizeBoolean($isDefault);
+      $option['name'] = 'custom_' . $customField['id'] . '[' . $fieldOption['value'] . ']';
+
+      $result[] = $option;
+    }
+
+    return $result;
+  }
+
 }
