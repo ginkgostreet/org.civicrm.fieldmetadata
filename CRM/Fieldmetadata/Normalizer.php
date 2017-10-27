@@ -137,6 +137,11 @@ abstract class CRM_Fieldmetadata_Normalizer {
   /**
    * Maps a field html_type to an angular widget
    *
+   * TODO: This method is doing too much. For example, "Date" and "Select Date"
+   * are obviously the same type; the normalizer layer should consolidate them
+   * irrespective of the context (Angular vs. other), but there isn't an obvious
+   * place to put this at the moment; some refactoring is in order.
+   *
    * @param $htmlType
    * @return bool|string|CRM_Case_Form_CustomData
    * @throws CRM_Core_Exception
@@ -158,6 +163,7 @@ abstract class CRM_Fieldmetadata_Normalizer {
         return "crm-render-chain-select";
       case 'Date':
       case 'DateTime':
+      case 'Select Date':
         return "crm-ui-datepicker";
       case 'Autocomplete-Select':
         return "crm-entityref";
