@@ -20,6 +20,7 @@ abstract class CRM_Fieldmetadata_Normalizer {
   function normalize($data, $params) {
     $metadata = $this->normalizeData($data, $params);
     $this->orderFields($metadata['fields']);
+    $this->setVisibilityForFields($metadata['fields']);
     return $metadata;
   }
 
@@ -35,6 +36,47 @@ abstract class CRM_Fieldmetadata_Normalizer {
       }
     }
     uasort($fields, array($this, "compareOrder"));
+  }
+
+  /**
+   * Loops through fields and normalizes the visibility values:
+   *
+   * - admin: only admins can use this field for input or view its value (admins
+   *   can access fields with any visibility)
+   * - public: anyone can use this field for input; fields which don't have a
+   *   visibility property will return this
+   * - public_and_listings: anyone can use this field for input or view
+   *   its value (e.g., in a profile)
+   * - user: only the user this field is about can use this field for input
+   *
+   * Values added to the "visibility" option group can also be returned (by
+   * name). Any other strings will be returned as-is (e.g., if someone were to
+   * hack civicrm_uf_field.visibility).
+   *
+   * @param array $fields
+   */
+  function setVisibilityForFields(&$fields) {
+    $api = civicrm_api3('OptionValue', 'get', array(
+      'option_group_id' => 'visibility',
+    ));
+    // Put options into an array: (int-like string) id => (string) name
+    $options = array_column($api['values'], 'name', 'value');
+
+    foreach ($fields as &$field) {
+      if (empty($field['visibility']) || $field['visibility'] === 'Public Pages') {
+        $field['visibility'] = 'public';
+      }
+      elseif ($field['visibility'] === 'Public Pages and Listings') {
+        $field['visibility'] = 'public_and_listings';
+      }
+      elseif ($field['visibility'] === 'User and User Admin Only') {
+        $field['visibility'] = 'user';
+      }
+      elseif (is_int($field['visibility']) || ctype_digit($field['visibility'])) {
+        $visibilityId = (string) $field['visibility'];
+        $field['visibility'] = $options[$visibilityId];
+      }
+    }
   }
 
   /**
