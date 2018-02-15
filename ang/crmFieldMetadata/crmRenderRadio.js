@@ -13,6 +13,8 @@
           $scope.model = null;
         };
 
+        $scope.formatMoney = CRM.formatMoney;
+
         //Handle defaults
         if(!$scope.model && $scope.field.options) {
           for(var i in $scope.field.options) {
