@@ -21,6 +21,7 @@ abstract class CRM_Fieldmetadata_Normalizer {
     $metadata = $this->normalizeData($data, $params);
     $this->orderFields($metadata['fields']);
     $this->setVisibilityForFields($metadata['fields']);
+    $this->fetchAndNormalizeDates($metadata['fields']);
     return $metadata;
   }
 
@@ -76,6 +77,92 @@ abstract class CRM_Fieldmetadata_Normalizer {
         $visibilityId = (string) $field['visibility'];
         $field['visibility'] = $options[$visibilityId];
       }
+    }
+  }
+
+  /**
+   * This will go through and add minDate and maxDate keys
+   * to each date field found. It will work for both custom
+   * fields and core fields.
+   *
+   * @param array $fields
+   * @return void
+   */
+  function fetchAndNormalizeDates(&$fields) {
+   
+    static $contactTypes = [];
+    static $dates = [];
+    static $formats = [];
+
+    $dateWidgets = array('Date', 'DateTime', 'Select Date', 'crm-ui-datepicker');
+    $thisYear = date('Y');
+
+    foreach ($fields as &$field) {
+      // skip non-date fields
+      if (!in_array($field['widget'], $dateWidgets)) {
+        continue;
+      }
+
+      // only do the lookup once
+      if (empty($dates[$field['name']])) {
+
+        // custom fields are little bit easier
+        if (strpos($field['name'], 'custom_') === 0) {
+          $customField = civicrm_api3('CustomField', 'getsingle', array(
+            'id' => substr($field['name'], 7),
+            'return' => 'start_date_years, end_date_years',
+          ));
+          $start = $customField['start_date_years'];
+          $end = $customField['end_date_years'];
+        }
+        // core fields
+        else {
+          // get contact types, i.e. potential entity name
+          if (empty($contactTypes)) {
+            $api = civicrm_api3('ContactType', 'get', array(
+              'sequential' => 1,
+              'is_active' => 1,
+            ));
+            foreach ($api['values'] as $contactType) {
+              $contactTypes[] = $contactType['name'];
+            }
+          }
+          
+          // look up the field first
+          $entity = in_array($field['entity'], $contactTypes) ? 'Contact' : $field['entity'];
+          $api = civicrm_api3($entity, 'getfield', array(
+            'name' => $field['name'],
+            'action' => 'get',
+          ));
+          
+          if (!$api['is_error'] && !empty($api['values']['html']['formatType'])) {
+          
+            $formatType = $api['values']['html']['formatType'];
+            
+            // only look the date format up once
+            if (empty($formats[$formatType])) {
+              $params = array('name' => $formatType);
+              $values = array();
+              CRM_Core_DAO::commonRetrieve('CRM_Core_DAO_PreferencesDate', $params, $values);
+              $formats[$formatType] = $values;
+            }
+            
+            $start = $formats[$formatType]['start'];
+            $end = $formats[$formatType]['end'];
+          }
+          else {
+            // last restore, make it 20/20
+            $start = $end = 20;
+          }
+        }
+
+        $dates[$field['name']]['minDate'] = ($thisYear - $start) . '-01-01';
+        $dates[$field['name']]['maxDate'] = ($thisYear + $end) . '-12-31';
+      }
+      
+      // add the dates to the field
+      $field['minDate'] = $dates[$field['name']]['minDate'];
+      $field['maxDate'] = $dates[$field['name']]['maxDate'];
     }
   }
 

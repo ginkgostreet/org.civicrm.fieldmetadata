@@ -14,7 +14,7 @@
         var childEl;
         switch (scope.field.widget) {
           case "crm-ui-datepicker":
-            var tmp = $compile('<input crm-ui-datepicker="{time: false}" ng-model="model" ng-required="field.required" />')(scope);
+            var tmp = $compile('<input crm-ui-datepicker="{minDate: \'' + scope.field.minDate + '\', maxDate: \'' + scope.field.maxDate + '\', time: false}" ng-model="model" ng-required="field.required" />')(scope);
             childEl = tmp.parent();
             break;
           case "crm-entityref":
