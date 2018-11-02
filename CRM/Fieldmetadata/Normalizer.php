@@ -106,6 +106,9 @@ abstract class CRM_Fieldmetadata_Normalizer {
       // only do the lookup once
       if (empty($dates[$field['name']])) {
 
+        // default to 20/20
+        $start = $end = 20;
+
         // custom fields are little bit easier
         if (strpos($field['name'], 'custom_') === 0) {
           $customField = civicrm_api3('CustomField', 'getsingle', array(
@@ -117,7 +120,13 @@ abstract class CRM_Fieldmetadata_Normalizer {
         }
         // core fields
         else {
-          // get contact types, i.e. potential entity name
+          /*  we have to look up the field to determine it's formatType.
+              $field['entity'] provied by the fetcher may not match the
+              entity that must be passed to the api. e.g. $field['entity']
+              for birth_date is Individual. Therefore, we need to make
+              sure that any contact type passed in entity is normalized to
+              Contact for the api call.
+          */
           if (empty($contactTypes)) {
             $api = civicrm_api3('ContactType', 'get', array(
               'sequential' => 1,
@@ -127,40 +136,37 @@ abstract class CRM_Fieldmetadata_Normalizer {
               $contactTypes[] = $contactType['name'];
             }
           }
-          
-          // look up the field first
           $entity = in_array($field['entity'], $contactTypes) ? 'Contact' : $field['entity'];
-          $api = civicrm_api3($entity, 'getfield', array(
-            'name' => $field['name'],
-            'action' => 'get',
-          ));
-          
-          if (!$api['is_error'] && !empty($api['values']['html']['formatType'])) {
-          
-            $formatType = $api['values']['html']['formatType'];
+
+          try {
+            $api = civicrm_api3($entity, 'getfield', array(
+              'name' => $field['name'],
+              'action' => 'get',
+            ));
             
-            // only look the date format up once
-            if (empty($formats[$formatType])) {
-              $params = array('name' => $formatType);
-              $values = array();
-              CRM_Core_DAO::commonRetrieve('CRM_Core_DAO_PreferencesDate', $params, $values);
-              $formats[$formatType] = $values;
+            if (!empty($api['values']['html']['formatType'])) {
+            
+              $formatType = $api['values']['html']['formatType'];
+              
+              // only look-up the date format once
+              if (empty($formats[$formatType])) {
+                $params = array('name' => $formatType);
+                $values = array();
+                CRM_Core_DAO::commonRetrieve('CRM_Core_DAO_PreferencesDate', $params, $values);
+                $formats[$formatType] = $values;
+              }
+              
+              $start = $formats[$formatType]['start'];
+              $end = $formats[$formatType]['end'];
             }
-            
-            $start = $formats[$formatType]['start'];
-            $end = $formats[$formatType]['end'];
           }
-          else {
-            // last restore, make it 20/20
-            $start = $end = 20;
-          }
+          catch (CiviCRM_API3_Exception $e) {}
         }
 
         $dates[$field['name']]['minDate'] = ($thisYear - $start) . '-01-01';
         $dates[$field['name']]['maxDate'] = ($thisYear + $end) . '-12-31';
       }
       
-      // add the dates to the field
       $field['minDate'] = $dates[$field['name']]['minDate'];
       $field['maxDate'] = $dates[$field['name']]['maxDate'];
     }
