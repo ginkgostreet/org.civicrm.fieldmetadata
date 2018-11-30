@@ -11,6 +11,7 @@ class CRM_Fieldmetadata_Normalizer_UFGroup extends CRM_Fieldmetadata_Normalizer 
   function normalizeData(&$data, $params) {
 
     $return = array(
+      "collectionId" => $data['id'],
       "collectionType" => "UFGroup",
       "title" => $data['title'],
       "name" => $data['name'],

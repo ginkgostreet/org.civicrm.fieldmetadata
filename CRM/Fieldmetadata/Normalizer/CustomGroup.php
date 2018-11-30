@@ -9,6 +9,7 @@ class CRM_Fieldmetadata_Normalizer_CustomGroup extends CRM_Fieldmetadata_Normali
 
   function normalizeData(&$data, $params) {
     $return = array(
+      "collectionId" => $data['id'],
       "collectionType" => "CustomGroup",
       "title" => $data['title'],
       "name" => $data['name'],
