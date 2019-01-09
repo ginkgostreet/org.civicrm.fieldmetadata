@@ -17,7 +17,7 @@ class CRM_Fieldmetadata_Fetcher_PaymentBlock extends CRM_Fieldmetadata_Fetcher {
 
     $return = $processor;
 
-    $return['title'] = CRM_Core_Payment_Form::getPaymentTypeLabel($processor);
+    $return['title'] = CRM_Core_Payment_Form::getPaymentTypeLabel($processor['object']);
 
     //Fetch the field metadata
     $return['fields'] = CRM_Core_Payment_Form::getPaymentFieldMetadata($processor);
