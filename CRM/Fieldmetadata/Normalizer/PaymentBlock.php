@@ -10,6 +10,7 @@ class CRM_Fieldmetadata_Normalizer_PaymentBlock extends CRM_Fieldmetadata_Normal
 
   function normalizeData(&$data, $params) {
     $return = array(
+      "collectionId" => $data['id'],
       "collectionType" => "PaymentBlock",
       "title" => $data['title'],
       "name" => $data['class_name'],

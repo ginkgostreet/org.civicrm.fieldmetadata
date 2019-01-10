@@ -10,7 +10,7 @@ class CRM_Fieldmetadata_Fetcher_BillingBlock extends CRM_Fieldmetadata_Fetcher {
 
   function fetch(&$params) {
     $data = array();
-    $id = CRM_Utils_Array::value("id", $params);
+    $data['id'] = $id = CRM_Utils_Array::value("id", $params);
     $bltId = CRM_Core_BAO_LocationType::getBilling();
 
     //fetch the payment processor
