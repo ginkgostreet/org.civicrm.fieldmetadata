@@ -15,8 +15,14 @@
         $element.addClass("crmRenderFieldCollection-"+$scope.collection.name);
 
         var fieldList = [];
+        var o;
         _.each($scope.collection.fields, function(field, fieldKey) {
-           fieldList.push({key: fieldKey, order: field.order});
+          // order - cast to and use as int, unless it's not a number
+          o = parseInt(field.order);
+          if (o.toString() !== field.order) {
+            o = field.order;
+          }
+          fieldList.push({key: fieldKey, order: o});
         });
         $scope.fieldList = fieldList;
 
