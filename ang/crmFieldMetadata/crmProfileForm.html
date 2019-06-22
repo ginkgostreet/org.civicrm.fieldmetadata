@@ -1,0 +1,19 @@
+<!--
+  The use of $eval() statements in the template feels dirty, but "name" needs to
+  be evaluated twice (once to get the developer-supplied name of the form, and
+  again to get the form object). There doesn't seem to be a way to do this on
+  the controller side.
+-->
+<div ng-if="loading">{{ts('Loading...')}}</div>
+<form
+  ng-if="!loading"
+  ng-submit="save()"
+  name="{{name}}"
+  crm-ui-id-scope>
+
+  <div crm-render-field-collection="fieldCollection" model="model"></div>
+  <ng-transclude></ng-transclude>
+  <div class="crm-submit-buttons">
+    <button crm-icon="fa-check" ng-disabled="$eval(name).$invalid" type="submit">{{ts('Save')}}</button>
+  </div>
+</form>
