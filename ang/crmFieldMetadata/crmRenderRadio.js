@@ -14,17 +14,18 @@
         };
 
         $scope.formatMoney = CRM.formatMoney;
-
-        //Handle defaults
-        if(!$scope.model && $scope.field.options) {
-          for(var i in $scope.field.options) {
-            if ($scope.field.options[i].default) {
-              $scope.model = $scope.field.options[i].value;
-              break;
+        // Handle default when $scope.model is not set(create page).
+        if(typeof $scope.model == "undefined") {
+          //Handle defaults
+          if(!$scope.model && $scope.field.options) {
+            for(var i in $scope.field.options) {
+              if ($scope.field.options[i].default) {
+                $scope.model = $scope.field.options[i].value;
+                break;
+              }
             }
           }
         }
-
       }]
     };
   });
