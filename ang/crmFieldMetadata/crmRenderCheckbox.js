@@ -11,15 +11,15 @@
       controller: ['$scope', function crmRenderCheckboxController($scope) {
         $scope.formatMoney = CRM.formatMoney;
         $scope.handleToggle = function (value) {
-          var i = $scope.model.indexOf(value);
+          var i = Object.values($scope.model).indexOf(value);
           if (i === -1) {
-            $scope.model.push(value);
+            $scope.model[value] = value;
           } else {
-            $scope.model.splice(i, 1);
+            delete $scope.model[value];
           }
         };
         $scope.isChecked = function (value) {
-          return ($scope.model.indexOf(value) === -1 ? false : true);
+          return (Object.values($scope.model).indexOf(value) === -1 ? false : true);
         };
         $scope.isRequired = function () {
           return $scope.field.required && ($scope.model.length === 0);
@@ -29,8 +29,22 @@
         // made. However, if we are retrieving a set of checkboxes for which no
         // selections have been made, CiviCRM's API represents the field as an
         // empty string. We standardize the representation here.
-        if (!Array.isArray($scope.model)) {
-          $scope.model = [];
+        // When scope is not set then prepare empty object and set default value for that field.
+        if(typeof $scope.model == "undefined") {
+          $scope.model = {};
+          //Handle defaults
+          if($scope.field.options) {
+            for(var i in $scope.field.options) {
+              if ($scope.field.options[i].default) {
+                $scope.model[$scope.field.options[i].value] = $scope.field.options[i].value;
+              }
+            }
+          }
+        }
+        // If scope set but value saved empty in database,
+        // Then For that field prepare blank object.
+        if($scope.model.length == 0) {
+          $scope.model = {};
         }
       }]
     };

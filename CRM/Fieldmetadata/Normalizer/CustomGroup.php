@@ -71,7 +71,20 @@ class CRM_Fieldmetadata_Normalizer_CustomGroup extends CRM_Fieldmetadata_Normali
         $option['is_active'] = $this->normalizeBoolean($fieldOption['is_active']);
         $option['label'] = $fieldOption['label'];
         $option['order'] = $fieldOption['weight'];
-        $option['default'] = $this->normalizeBoolean($fieldOption['is_default']);
+        // If default value is an array then check default value exist in array.
+        // If exist assign that value under "default" parameter.
+        // Get default value from custom field details instead of option details.
+        if(is_array($customField['default_value'])) {
+          if(in_array($fieldOption['value'], $customField['default_value'])) {
+            $option['default'] = $fieldOption['value'];
+          }
+        } else {
+          if($fieldOption['value'] == $customField['default_value']) {
+            $option['default'] = $customField['default_value'];
+          } else {
+            $option['default'] = "";
+          }
+        }
         $option['value'] = $fieldOption['value'];
 
         $option['name'] = $fieldOption['name'];
