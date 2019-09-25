@@ -51,6 +51,7 @@ class CRM_Fieldmetadata_Fetcher_UFGroup extends CRM_Fieldmetadata_Fetcher {
             'sequential' => 1,
             'option_group_id' => $optionGroupId,
             'options' => array('limit' => 0),
+            'is_active' => 1,
           ));
 
           if ($result['count'] > 0) {
