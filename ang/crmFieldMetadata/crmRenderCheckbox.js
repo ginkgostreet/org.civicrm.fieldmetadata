@@ -35,7 +35,7 @@
           //Handle defaults
           if($scope.field.options) {
             for(var i in $scope.field.options) {
-              if ($scope.field.options[i].default) {
+              if ($scope.field.options[i].default !== '0') {
                 $scope.model[$scope.field.options[i].value] = $scope.field.options[i].value;
               }
             }
