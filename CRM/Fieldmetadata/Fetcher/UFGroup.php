@@ -50,7 +50,7 @@ class CRM_Fieldmetadata_Fetcher_UFGroup extends CRM_Fieldmetadata_Fetcher {
           $result = civicrm_api3('OptionValue', 'get', array(
             'sequential' => 1,
             'option_group_id' => $optionGroupId,
-            'options' => array('limit' => 0),
+            'options' => array('limit' => 0, 'sort' => 'weight'),
             'is_active' => 1,
           ));
 
