@@ -11,11 +11,20 @@
       controller: ['$scope', function crmRenderCheckboxController($scope) {
         $scope.formatMoney = CRM.formatMoney;
         $scope.handleToggle = function (value) {
-          var i = Object.values($scope.model).indexOf(value);
-          if (i === -1) {
-            $scope.model[value] = value;
+          if (Array.isArray($scope.model)) {
+            var i = $scope.model.indexOf(value);
+            if (i === -1) {
+              $scope.model.push(value);
+            } else {
+              $scope.model.splice(i, 1);
+            }
           } else {
-            delete $scope.model[value];
+            var i = Object.values($scope.model).indexOf(value);
+            if (i === -1) {
+              $scope.model[value] = value;
+            } else {
+              delete $scope.model[value];
+            }
           }
         };
         $scope.isChecked = function (value) {
