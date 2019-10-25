@@ -22,7 +22,7 @@
           return (Object.values($scope.model).indexOf(value) === -1 ? false : true);
         };
         $scope.isRequired = function () {
-          return $scope.field.required && ($scope.model.length === 0);
+          return $scope.field.required && (Object.keys($scope.model).length === 0);
         };
 
         // Checkboxes are modeled as Arrays because multiple selections can be
