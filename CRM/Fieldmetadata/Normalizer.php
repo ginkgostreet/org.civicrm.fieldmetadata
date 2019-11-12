@@ -32,7 +32,7 @@ abstract class CRM_Fieldmetadata_Normalizer {
    */
   function orderFields(&$fields) {
     foreach($fields as $field) {
-      if (sizeof($field['options'] > 1)) {
+      if (sizeof($field['options']) > 1) {
         uasort($field['options'], array($this, "compareOrder"));
       }
     }
