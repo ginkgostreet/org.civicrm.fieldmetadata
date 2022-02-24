@@ -35,7 +35,7 @@ class CRM_Fieldmetadata_Normalizer_UFGroup extends CRM_Fieldmetadata_Normalizer 
       $field["defaultValue"] = "";
       $field["preText"] = CRM_Utils_Array::value("help_pre", $fieldData, "");
       $field["postText"] = CRM_Utils_Array::value("help_post", $fieldData, "");
-      $field["visibility"] = $fieldData['visibiility'];
+      $field["visibility"] = $fieldData['visibility'];
 
       //todo: Use either the html_type or the data type
       $field['widget'] = $fieldData['html_type'];
