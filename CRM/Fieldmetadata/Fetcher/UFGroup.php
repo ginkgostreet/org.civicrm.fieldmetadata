@@ -121,7 +121,7 @@ class CRM_Fieldmetadata_Fetcher_UFGroup extends CRM_Fieldmetadata_Fetcher {
   }
 
   public function setDefaults($defaultValues, $filter = null) {
-    error_log("setDefaults");
+    error_log("NOT IMPLEMENTED: setDefaults");
   }
 
   public function createElement($type, $value, $title, $var, $key) {
