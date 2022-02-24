@@ -10,7 +10,7 @@ class CRM_Fieldmetadata_Hook {
    * @return mixed
    */
   public static function registerFetcher(&$fetcherClasses) {
-    return CRM_Utils_Hook::singleton()->invoke(1, $fetcherClasses, CRM_Utils_Hook::$_nullObject,
+    return CRM_Utils_Hook::singleton()->invoke(['fetcherClasses'], $fetcherClasses, CRM_Utils_Hook::$_nullObject,
       CRM_Utils_Hook::$_nullObject, CRM_Utils_Hook::$_nullObject, CRM_Utils_Hook::$_nullObject, CRM_Utils_Hook::$_nullObject,
       'civicrm_fieldmetadata_registerFetcher'
     );
@@ -23,7 +23,7 @@ class CRM_Fieldmetadata_Hook {
    * @return mixed
    */
   public static function registerNormalizer(&$normalizerClasses) {
-    return CRM_Utils_Hook::singleton()->invoke(1, $normalizerClasses, CRM_Utils_Hook::$_nullObject,
+    return CRM_Utils_Hook::singleton()->invoke(['normalizerClasses'], $normalizerClasses, CRM_Utils_Hook::$_nullObject,
       CRM_Utils_Hook::$_nullObject, CRM_Utils_Hook::$_nullObject, CRM_Utils_Hook::$_nullObject, CRM_Utils_Hook::$_nullObject,
       'civicrm_fieldmetadata_registerNormalizer'
     );
